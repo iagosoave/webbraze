@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, Check, Menu, Workflow, Code, Calendar, MessageSquare, PenTool, MonitorPlay, ArrowRight, Star, Globe, Users, Coffee,Instagram} from 'lucide-react';
+import { ChevronDown, Check, Menu, Workflow, Code, Calendar, MessageSquare, PenTool, MonitorPlay, ArrowRight, Star, Globe, Users, Coffee, Instagram } from 'lucide-react';
 import por1 from './por1.png';  
 import por2 from './por2.png';  
 import por3 from './por3.png'; 
@@ -8,29 +8,155 @@ import por4 from './por4.png';
 import ban from './ban.png';
 import logo from './logo.png'; // Ajuste o caminho da sua imagem 
 // Importação da fonte Inter do Google Fonts (adicione no seu HTML)
-// <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+// <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
 
 const NavLink = ({ children, section, onClick }) => {
-  const handleClick = () => {
-    const element = document.getElementById(section);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      if (onClick) onClick();
+  const handleClick = (e) => {
+    e.preventDefault();
+    
+    // Fecha o menu mobile se houver um onClick handler
+    if (onClick) {
+      onClick();
     }
+
+    // Pequeno delay para garantir que o menu fechou
+    setTimeout(() => {
+      const element = document.getElementById(section);
+      if (element) {
+        const navHeight = 80;
+        const extraPadding = 16; // Padding extra para melhor visualização
+        const offset = navHeight + extraPadding;
+        
+        // Usando o scrollIntoView com offset
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   return (
-    <motion.a 
+    <a
+      href={`#${section}`}
       onClick={handleClick}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      className="text-white cursor-pointer px-4 py-2 rounded-lg hover:bg-white/10 relative group"
+      className="block w-full px-6 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors duration-200 rounded-lg"
     >
       {children}
-      <motion.div
-        className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 group-hover:w-full transition-all duration-300"
-      />
-    </motion.a>
+    </a>
+  );
+};
+
+const Navigation = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
+  const navBackground = useTransform(
+    scrollY,
+    [0, 100],
+    ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.8)"]
+  );
+
+  // Desabilita o scroll quando o menu mobile está aberto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  const menuItems = [
+    { section: 'hero', label: 'Início' },
+    { section: 'process', label: 'Processo' },
+    { section: 'portfolio', label: 'Portfólio' },
+    { section: 'precos', label: 'Preços' },
+    { section: 'faq', label: 'FAQ' }
+  ];
+
+  const handleMobileNavClick = () => {
+    setIsMenuOpen(false);
+  };
+
+
+  return (
+    <motion.nav
+    style={{ backgroundColor: navBackground }}
+    className="fixed w-full z-50 backdrop-blur-md"
+  >
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-between h-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-3xl font-bold text-white flex items-center gap-2"
+        >
+          <img
+            src={logo}
+            alt="Webbraze Logo"
+            className="h-16 w-auto"
+          />
+          Webbraze
+        </motion.div>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-2">
+          {menuItems.map(({ section, label }) => (
+            <NavLink key={section} section={section}>
+              {label}
+            </NavLink>
+          ))}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="md:hidden text-white p-2"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <Menu size={24} />
+        </motion.button>
+      </div>
+    </div>
+
+    {/* Mobile Navigation */}
+    <motion.div
+      initial={false}
+      animate={{
+        height: isMenuOpen ? 'auto' : 0,
+        opacity: isMenuOpen ? 1 : 0
+      }}
+      transition={{ duration: 0.3 }}
+      className="md:hidden overflow-hidden bg-black/90 backdrop-blur-lg"
+    >
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ 
+          y: isMenuOpen ? 0 : -20, 
+          opacity: isMenuOpen ? 1 : 0 
+        }}
+        transition={{ delay: 0.1 }}
+        className="flex flex-col py-4"
+      >
+        {menuItems.map(({ section, label }) => (
+          <NavLink
+            key={section}
+            section={section}
+            onClick={handleMobileNavClick}
+          >
+            {label}
+          </NavLink>
+        ))}
+      </motion.div>
+    </motion.div>
+  </motion.nav>
   );
 };
 
@@ -51,8 +177,6 @@ const FloatingElement = ({ delay }) => {
     />
   );
 };
-
-
 
 const StatsCard = ({ icon: Icon, value, label }) => (
   <motion.div
@@ -200,18 +324,6 @@ const FAQ = ({ question, answer }) => {
 };
 
 const LandingPage = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { scrollY } = useScroll();
-  const navBackground = useTransform(
-    scrollY,
-    [0, 100],
-    ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.8)"]
-  );
-
-  const handleMobileNavClick = () => {
-    setIsMenuOpen(false);
-  };
-
   return (
     <div className="min-h-screen bg-[#090412] font-['Space_Grotesk']">
       {/* Background Elements */}
@@ -219,189 +331,133 @@ const LandingPage = () => {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl" />
       </div>
-
-      <motion.nav
-        style={{ backgroundColor: navBackground }}
-        className="fixed w-full z-50 backdrop-blur-md"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-          <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  className="text-3xl font-bold text-white flex items-center gap-2"
->
-  <img 
-    src={logo} 
-    alt="Webbraze Logo" 
-    className="h-16 w-auto" // Ajuste o tamanho conforme necessário
-  />
-  Webbraze
-</motion.div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-6">
-              <NavLink section="hero">Início</NavLink>
-              <NavLink section="process">Processo</NavLink>
-              <NavLink section="portfolio">Portfólio</NavLink>
-              <NavLink section="pricing">Preços</NavLink>
-              <NavLink section="faq">FAQ</NavLink>
-            </div>
-            
-            {/* Mobile Menu Button */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="md:hidden text-white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <Menu size={24} />
-            </motion.button>
-          </div>
+      <Navigation />
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center pt-20 px-4 overflow-hidden" id='hero'>
+        {/* Floating Elements com posições ajustadas */}
+        <div className="absolute top-1/4 left-1/4">
+          <FloatingElement delay={0} />
+        </div>
+        <div className="absolute top-1/2 right-1/3">
+          <FloatingElement delay={1.5} />
+        </div>
+        <div className="absolute bottom-1/4 left-1/3">
+          <FloatingElement delay={3} />
         </div>
         
-        {/* Mobile Navigation */}
-        <motion.div
-          initial={false}
-          animate={{ height: isMenuOpen ? 'auto' : 0 }}
-          className="md:hidden overflow-hidden bg-black/90 backdrop-blur-lg"
-        >
-          <div className="px-4 py-4 space-y-2">
-            <NavLink section="hero" onClick={handleMobileNavClick}>Início</NavLink>
-            <NavLink section="process" onClick={handleMobileNavClick}>Processo</NavLink>
-            <NavLink section="portfolio" onClick={handleMobileNavClick}>Portfólio</NavLink>
-            <NavLink section="pricing" onClick={handleMobileNavClick}>Preços</NavLink>
-            <NavLink section="faq" onClick={handleMobileNavClick}>FAQ</NavLink>
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          <div className="relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-sm font-medium text-blue-400 mb-4"
+            >
+              WEBSITES PROFISSIONAIS
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+            >
+              Transforme sua presença digital
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                {" "}com estilo
+              </span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-xl text-gray-300 mb-8 leading-relaxed"
+            >
+              Criamos websites modernos e responsivos que impressionam seus clientes e convertem visitantes em resultados.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex gap-4"
+            >
+              <motion.a
+                href="https://wa.me/5515997155627?text=Olá! Gostaria de começar meu projeto."
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2"
+              >
+                Comece seu projeto
+                <ArrowRight size={20} />
+              </motion.a>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  const portfolioSection = document.querySelector('#portfolio');
+                  if (portfolioSection) {
+                    portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="bg-white/10 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all"
+              >
+                Ver portfólio
+              </motion.button>
+            </motion.div>
           </div>
-        </motion.div>
-      </motion.nav>
-{/* Hero Section */}
-{/* Hero Section */}
-<section className="relative min-h-screen flex items-center pt-20 px-4 overflow-hidden" id='hero'>
-  {/* Floating Elements com posições ajustadas */}
-  <div className="absolute top-1/4 left-1/4">
-    <FloatingElement delay={0} />
-  </div>
-  <div className="absolute top-1/2 right-1/3">
-    <FloatingElement delay={1.5} />
-  </div>
-  <div className="absolute bottom-1/4 left-1/3">
-    <FloatingElement delay={3} />
-  </div>
-  
-  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-    <div className="relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-sm font-medium text-blue-400 mb-4"
-      >
-        WEBSITES PROFISSIONAIS
-      </motion.div>
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
-      >
-        Transforme sua presença digital
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-          {" "}com estilo
-        </span>
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="text-xl text-gray-300 mb-8 leading-relaxed"
-      >
-        Criamos websites modernos e responsivos que impressionam seus clientes e convertem visitantes em resultados.
-      </motion.p>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="flex gap-4"
-      >
-        <motion.a
-          href="https://wa.me/5515997155627?text=Olá! Gostaria de começar meu projeto."
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2"
-        >
-          Comece seu projeto
-          <ArrowRight size={20} />
-        </motion.a>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            const portfolioSection = document.querySelector('#portfolio');
-            if (portfolioSection) {
-              portfolioSection.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-          className="bg-white/10 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all"
-        >
-          Ver portfólio
-        </motion.button>
-      </motion.div>
-    </div>
-    
-    <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.4 }}
-      className="relative w-full hidden md:block" // Adicionado hidden md:block aqui
-    >
-      {/* Elementos geométricos aumentados */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.6 }}
-        className="absolute w-32 h-32 border-4 border-white/10 rounded-full -top-16 -left-16 z-20"
-      />
-      <motion.div 
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8 }}
-        className="absolute w-24 h-24 border-4 border-white/10 rotate-45 top-1/2 -right-12 z-20"
-      />
-      <motion.div 
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute w-28 h-28 border-4 border-white/10 rounded-full -bottom-12 left-1/4 z-20"
-      />
+          
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+            className="relative w-full hidden md:block" // Adicionado hidden md:block aqui
+          >
+            {/* Elementos geométricos aumentados */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6 }}
+              className="absolute w-32 h-32 border-4 border-white/10 rounded-full -top-16 -left-16 z-20"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8 }}
+              className="absolute w-24 h-24 border-4 border-white/10 rotate-45 top-1/2 -right-12 z-20"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1 }}
+              className="absolute w-28 h-28 border-4 border-white/10 rounded-full -bottom-12 left-1/4 z-20"
+            />
 
-      {/* Foguete com movimento mais suave */}
-      <motion.div
-        initial={{ y: 0 }}
-        animate={{ y: [-15, 15, -15] }}
-        transition={{ 
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute -top-20 right-20 z-30 text-7xl transform -rotate-45"
-      >
-        🚀
-      </motion.div>
+            {/* Foguete com movimento mais suave */}
+            <motion.div
+              initial={{ y: 0 }}
+              animate={{ y: [-15, 15, -15] }}
+              transition={{ 
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute -top-20 right-20 z-30 text-7xl transform -rotate-45"
+            >
+              🚀
+            </motion.div>
 
-      {/* Imagem principal aumentada */}
-      <div className="relative z-10 w-full">
-        <img
-          src={ban}
-          alt="Dashboard Preview"
-          className="w-full rounded-3xl shadow-2xl transform scale-110 md:scale-125 hover:scale-115 md:hover:scale-130 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl" />
-      </div>
-    </motion.div>
-  </div>
-</section>
+            {/* Imagem principal aumentada */}
+            <div className="relative z-10 w-full">
+              <img
+                src={ban}
+                alt="Dashboard Preview"
+                className="w-full rounded-3xl shadow-2xl transform scale-110 md:scale-125 hover:scale-115 md:hover:scale-130 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl" />
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Stats Section */}
       <section className="py-20 px-4">
@@ -434,7 +490,7 @@ const LandingPage = () => {
             </motion.p>
           </div>
           
-          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6" id='processo'>
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
             <ProcessStep
               icon={MessageSquare}
               title="1. Contato"
@@ -470,7 +526,7 @@ const LandingPage = () => {
       </section>
 
     {/* Portfolio Section */}
-    <section className="py-12 md:py-20 px-4" id = "portfolio">
+    <section className="py-12 md:py-20 px-4" id="portfolio">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-16">
             <motion.h2
@@ -547,7 +603,7 @@ const LandingPage = () => {
       </section>
 
   {/* Pricing Section */}
-  <section className="py-20 px-4 relative overflow-hidden" id="preços">
+  <section className="py-20 px-4 relative overflow-hidden" id="precos">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/20 to-transparent" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">

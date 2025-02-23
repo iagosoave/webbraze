@@ -371,7 +371,7 @@ const LandingPage = () => {
               transition={{ delay: 0.4 }}
               className="text-xl text-gray-300 mb-8 leading-relaxed"
             >
-              Criamos websites modernos e responsivos que impressionam seus clientes e convertem visitantes em resultados.
+              Criamos landing pages modernas e responsivas que impressionam seus clientes e convertem visitantes em resultados.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

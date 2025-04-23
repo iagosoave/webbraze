@@ -4,7 +4,7 @@ import { ChevronDown, Check, Menu, Workflow, Code, Calendar, MessageSquare, PenT
 import por1 from './por1.png';  
 import por2 from './por2.png';  
 import por3 from './por3.png'; 
-import por4 from './por4.png'; 
+import cris from './cris.png'; 
 import ban from './ban.png';
 import logo from './logo.png'; // Ajuste o caminho da sua imagem 
 // Importação da fonte Inter do Google Fonts (adicione no seu HTML)
@@ -547,15 +547,15 @@ const LandingPage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             <a 
-              href="https://silavadvogado.netlify.app/" 
+              href="https://metodoato.com/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="transition-transform hover:scale-105 focus:scale-105 focus:outline-none"
             >
               <PortfolioCard
-                image={por4}
-                title="Landing Page Advocacia"
-                description="Website profissional para escritório de advocacia"
+                image={cris}
+                title="Landing Page para infoprodutores "
+                description="Landing Page avanaçada para infoprodutores"
                 delay={0.1}
               />
             </a>
@@ -603,86 +603,85 @@ const LandingPage = () => {
       </section>
 
   {/* Pricing Section */}
-  <section className="py-20 px-4 relative overflow-hidden" id="precos">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/20 to-transparent" />
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-bold text-white mb-6"
-            >
-              Investimento
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-xl text-gray-300 max-w-2xl mx-auto"
-            >
-              Comece sua presença digital hoje mesmo
-            </motion.p>
-          </div>
-          
-          <div className="max-w-lg mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.03, y: -10 }}
-              className="p-8 rounded-2xl bg-gradient-to-br from-blue-600/90 to-purple-600/90 border-2 border-white/20 backdrop-blur-xl relative overflow-hidden"
-            >
-              <div className="absolute top-4 right-4">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                >
-                  <Star className="text-yellow-400 w-8 h-8" />
-                </motion.div>
-              </div>
-              
-              <h3 className="text-2xl font-bold text-white mb-4">Landing Page Profissional</h3>
-              <div className="mb-8">
-                <span className="text-5xl font-bold text-white">R$ 75</span>
-                <span className="text-lg text-gray-300">/mês</span>
-                <p className="text-gray-300 mt-2">Em até 12x sem juros</p>
-              </div>
-              
-              <ul className="space-y-4 mb-8">
-                {[
-                  "Design responsivo moderno",
-                  "Otimização para SEO",
-                  "Animações e efeitos interativos",
-                  "Formulário de contato",
-                  "Suporte por 12 meses",
-                  "Pagamento em 12x sem juros"
-                ].map((feature, index) => (
-                  <motion.li 
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center text-gray-300"
-                  >
-                    <Check size={20} className="mr-3 text-green-400 flex-shrink-0" />
-                    <span>{feature}</span>
-                  </motion.li>
-                ))}
-              </ul>
-              
-              <motion.a
-                href={`https://wa.me/5515997155627?text=${encodeURIComponent("Olá! Gostaria de saber mais sobre a Landing Page Profissional.")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full py-4 px-6 rounded-xl bg-white text-purple-600 hover:bg-gray-100 font-bold flex items-center justify-center gap-2 transition-all"
-              >
-               Quero Minha Landing Page Agora
-                <ArrowRight size={20} />
-              </motion.a>
-            </motion.div>
-          </div>
+  <section className="py-20 px-4 relative overflow-hidden" id="contato">
+  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/20 to-transparent" />
+  <div className="max-w-7xl mx-auto relative z-10">
+    <div className="text-center mb-16">
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="text-4xl md:text-5xl font-bold text-white mb-6"
+      >
+        Fale Conosco
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="text-xl text-gray-300 max-w-2xl mx-auto"
+      >
+        Comece sua presença digital hoje mesmo com uma solução personalizada
+      </motion.p>
+    </div>
+    
+    <div className="max-w-lg mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.03, y: -10 }}
+        className="p-8 rounded-2xl bg-gradient-to-br from-blue-600/90 to-purple-600/90 border-2 border-white/20 backdrop-blur-xl relative overflow-hidden"
+      >
+        <div className="absolute top-4 right-4">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          >
+            <Star className="text-yellow-400 w-8 h-8" />
+          </motion.div>
         </div>
-      </section>
+        
+        <h3 className="text-2xl font-bold text-white mb-4">Landing Page Profissional</h3>
+        <div className="mb-8">
+          <h4 className="text-3xl font-bold text-white">Solicite um Orçamento</h4>
+          <p className="text-gray-300 mt-2">Planos personalizados e facilidade de pagamento</p>
+        </div>
+        
+        <ul className="space-y-4 mb-8">
+          {[
+            "Design responsivo moderno",
+            "Otimização para SEO",
+            "Animações e efeitos interativos",
+            "Formulário de contato",
+            "Suporte por 12 meses",
+            "Opções de parcelamento"
+          ].map((feature, index) => (
+            <motion.li
+               key={index}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="flex items-center text-gray-300"
+            >
+              <Check size={20} className="mr-3 text-green-400 flex-shrink-0" />
+              <span>{feature}</span>
+            </motion.li>
+          ))}
+        </ul>
+        
+        <motion.a
+          href={`https://wa.me/5515997155627?text=${encodeURIComponent("Olá! Gostaria de saber mais sobre a Landing Page Profissional.")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full py-4 px-6 rounded-xl bg-white text-purple-600 hover:bg-gray-100 font-bold flex items-center justify-center gap-2 transition-all"
+        >
+         Entrar em Contato
+          <ArrowRight size={20} />
+        </motion.a>
+      </motion.div>
+    </div>
+  </div>
+</section>
 
       {/* FAQ Section */}
       <section className="py-20 px-4" id="faq">

@@ -4,6 +4,7 @@ import { ChevronDown, Check, Menu, Workflow, Code, Calendar, MessageSquare, PenT
 import por1 from './por1.png';  
 import por2 from './por2.png';  
 import por3 from './por3.png'; 
+import por4 from './por4.png'; 
 import cris from './cris.png'; 
 import ban from './ban.png';
 import logo from './logo.png'; // Ajuste o caminho da sua imagem 
@@ -547,7 +548,7 @@ const LandingPage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             <a 
-              href="https://metodoato.com/" 
+              href="https://metodo-ato.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="transition-transform hover:scale-105 focus:scale-105 focus:outline-none"
@@ -573,28 +574,28 @@ const LandingPage = () => {
               />
             </a>
             <a 
-              href="https://ebookhabitos.netlify.app/" 
+              href="https://occalife.com.br/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="transition-transform hover:scale-105 focus:scale-105 focus:outline-none"
             >
               <PortfolioCard
                 image={por2}
-                title="Ebook Hábitos Saudáveis"
-                description="Transforme sua vida com novos hábitos"
+                title="E-ccomerce Occa Life"
+                description="E-ccomerce para a loja de roupa Occa life"
                 delay={0.3}
               />
             </a>
             <a 
-              href="https://ebookemagrecer.netlify.app/" 
+              href="https://lp-soave.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="transition-transform hover:scale-105 focus:scale-105 focus:outline-none"
             >
               <PortfolioCard
-                image={por1}
-                title="Ebook Emagrecimento"
-                description="Guia prático para uma vida mais saudável"
+                image={por4}
+                title="Landing Page Advocacia Soave"
+                description="Landing Page para Advocacia Soave"
                 delay={0.4}
               />
             </a>
@@ -639,7 +640,7 @@ const LandingPage = () => {
           </motion.div>
         </div>
         
-        <h3 className="text-2xl font-bold text-white mb-4">Landing Page Profissional</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">Sites Profissionais</h3>
         <div className="mb-8">
           <h4 className="text-3xl font-bold text-white">Solicite um Orçamento</h4>
           <p className="text-gray-300 mt-2">Planos personalizados e facilidade de pagamento</p>

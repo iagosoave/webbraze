@@ -700,7 +700,7 @@ const LandingPage = () => {
           <div className="space-y-4">
             <FAQ
               question="Quanto tempo leva para desenvolver um site?"
-              answer=" O prazo de desenvolvimento é de 2 a 3 dias, garantindo um design profissional e otimizado para conversões."
+              answer=" O prazo de desenvolvimento é de 2 a 8 dias, garantindo um design profissional e otimizado para conversões."
             />
             <FAQ
               question="Vocês oferecem suporte após a entrega?"
@@ -712,7 +712,7 @@ const LandingPage = () => {
             />
             <FAQ
               question="Como funciona o processo de pagamento?"
-              answer="Você pode pagar via PIX e garantir um desconto de 5%, ficando por R$ 855,00 à vista. Ou, se preferir, pode parcelar em 12x de R$ 75,00 no cartão"
+              answer="Você pode pagar via PIX ou se preferir, pode parcelar em 12x no cartão com juros"
             />
           </div>
         </div>
